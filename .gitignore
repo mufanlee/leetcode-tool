@@ -10,3 +10,4 @@ target/
 .vscode/
 
 /src/main/resources/doc/
+/src/test/resources/doc/

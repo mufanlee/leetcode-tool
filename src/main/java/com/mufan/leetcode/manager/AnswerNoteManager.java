@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 public final class AnswerNoteManager {
   private AnswerNoteManager() {}
 
-  public static void generateAnswerNote(String articleSlug, String path) {
-    Question question = LeetCodeRequestUtils.getCnQuestion(articleSlug);
+  public static void generateAnswerNote(String questionSlug, String path) {
+    Question question = LeetCodeRequestUtils.getCnQuestion(questionSlug);
     if (Objects.isNull(question)) {
-      System.out.println(articleSlug + "：请求失败！");
+      System.out.println(questionSlug + "：请求失败！");
       return;
     }
 
@@ -34,8 +34,8 @@ public final class AnswerNoteManager {
             .question(formatMarkdown(question.getTranslatedContent()))
             .code(getCodeSnippet(question.getCodeSnippets(), CodeLang.JAVA))
             .build();
-    System.out.println(
-        question.getQuestionFrontendId() + "." + question.getTranslatedTitle() + " 请求成功！");
+    String name = question.getQuestionFrontendId() + ". " + question.getTranslatedTitle();
+    System.out.println("[" + name + "](leetcode/" + getFileName(question) + ")");
     FileUtils.saveFile(path + getFileName(question), note.toString());
   }
 

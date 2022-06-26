@@ -21,14 +21,12 @@ public final class LeetCodeRequestUtils {
     MyHttpRequest request = MyHttpRequest.get(weeklyContestUrl(id));
     MyHttpResponse response = HttpRequestUtils.executeGet(request);
     if (response.getStatusCode() == HttpStatus.HTTP_OK) {
-      WeeklyContest contest = JSONUtil.toBean(response.getBody(), WeeklyContest.class);
-      System.out.println(contest.getContest().getTitle());
-      return Optional.of(contest);
+      return Optional.of(JSONUtil.toBean(response.getBody(), WeeklyContest.class));
     }
     return Optional.empty();
   }
 
-  public static Question getCnQuestion(String articleSlug) {
+  public static Question getCnQuestion(String questionSlug) {
     try {
       MyHttpRequest request =
           MyHttpRequest.post("https://leetcode.cn/graphql/", "application/json");
@@ -37,7 +35,7 @@ public final class LeetCodeRequestUtils {
               + "  \"operationName\": \"questionData\",\n"
               + "  \"variables\": {\n"
               + "    \"titleSlug\": \""
-              + articleSlug
+              + questionSlug
               + "\"\n"
               + "  },\n"
               + "  \"query\": \"query questionData($titleSlug: String!) {\\n  question(titleSlug: $titleSlug) {\\n    questionId\\n    questionFrontendId\\n    categoryTitle\\n    boundTopicId\\n    title\\n    titleSlug\\n    content\\n    translatedTitle\\n    translatedContent\\n    isPaidOnly\\n    difficulty\\n    likes\\n    dislikes\\n    isLiked\\n    similarQuestions\\n    contributors {\\n      username\\n      profileUrl\\n      avatarUrl\\n      __typename\\n    }\\n    langToValidPlayground\\n    topicTags {\\n      name\\n      slug\\n      translatedName\\n      __typename\\n    }\\n    companyTagStats\\n    codeSnippets {\\n      lang\\n      langSlug\\n      code\\n      __typename\\n    }\\n    stats\\n    hints\\n    solution {\\n      id\\n      canSeeDetail\\n      __typename\\n    }\\n    status\\n    sampleTestCase\\n    metaData\\n    judgerAvailable\\n    judgeType\\n    mysqlSchemas\\n    enableRunCode\\n    envInfo\\n    book {\\n      id\\n      bookName\\n      pressName\\n      source\\n      shortDescription\\n      fullDescription\\n      bookImgUrl\\n      pressImgUrl\\n      productUrl\\n      __typename\\n    }\\n    isSubscribed\\n    isDailyQuestion\\n    dailyRecordStatus\\n    editorType\\n    ugcQuestionId\\n    style\\n    exampleTestcases\\n    jsonExampleTestcases\\n    __typename\\n  }\\n}\\n\"\n"
