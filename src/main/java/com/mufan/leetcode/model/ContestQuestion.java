@@ -1,4 +1,4 @@
-package com.mufan.leetcode.vo;
+package com.mufan.leetcode.model;
 
 import lombok.Data;
 

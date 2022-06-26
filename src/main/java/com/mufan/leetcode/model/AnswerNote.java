@@ -15,6 +15,8 @@ public class AnswerNote {
   private String slug;
   private String question;
 
+  private String code;
+
   @Override
   public String toString() {
     return "# "
@@ -40,10 +42,14 @@ public class AnswerNote {
         + "\n"
         + "##### 复杂度分析\n"
         + "\n"
-        + "- 时间复杂度：\n"
-        + "- 空间复杂度：\n"
+        + "- 时间复杂度：$O(n)$。\n"
+        + "- 空间复杂度：$O(n)$。\n"
         + "\n"
         + "### 代码\n"
-        + "\n";
+        + "\n"
+        + "```java\n"
+        + code
+        + "\n"
+        + "```";
   }
 }

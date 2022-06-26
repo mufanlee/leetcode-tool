@@ -6,7 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.mufan.leetcode.model.MyHttpRequest;
 import com.mufan.leetcode.model.MyHttpResponse;
 import com.mufan.leetcode.model.Question;
-import com.mufan.leetcode.vo.WeeklyContest;
+import com.mufan.leetcode.model.WeeklyContest;
 
 import java.util.Optional;
 
