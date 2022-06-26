@@ -25,7 +25,7 @@ public class ArticleManager {
 
     AnswerNote note =
         AnswerNote.builder()
-            .id(question.getQuestionId())
+            .id(question.getQuestionFrontendId())
             .title(question.getTranslatedTitle())
             .slug(question.getTitleSlug())
             .question(formatMarkdown(question.getTranslatedContent()))
