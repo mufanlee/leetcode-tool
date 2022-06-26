@@ -6,11 +6,12 @@ import com.mufan.leetcode.model.MyHttpRequest;
 import com.mufan.leetcode.model.MyHttpResponse;
 
 /**
- * @author shuzijun
+ * @author lipeng
  */
-public class HttpRequestUtils {
-
+public final class HttpRequestUtils {
   private static final int TIME_OUT = 90000;
+
+  private HttpRequestUtils() {}
 
   public static MyHttpResponse executeGet(MyHttpRequest request) {
     HttpResponse response =

@@ -1,4 +1,4 @@
-package com.mufan.leetcode.VO;
+package com.mufan.leetcode.vo;
 
 import lombok.Data;
 
@@ -7,6 +7,6 @@ import java.util.List;
 @Data
 public class WeeklyContest {
   private Contest contest;
-  private List<Question> questions;
+  private List<ContestQuestion> questions;
   private Integer userNum;
 }

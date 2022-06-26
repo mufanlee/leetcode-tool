@@ -1,4 +1,4 @@
-package com.mufan.leetcode.VO;
+package com.mufan.leetcode.vo;
 
 import lombok.Data;
 import lombok.ToString;

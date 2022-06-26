@@ -7,7 +7,8 @@ import java.io.IOException;
 /**
  * @author lipeng
  */
-public class FileUtils {
+public final class FileUtils {
+  private FileUtils() {}
 
   public static void saveFile(String path, String body) {
     saveFile(new File(path), body);

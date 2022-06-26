@@ -1,55 +1,34 @@
-package com.mufan.leetcode;
+package com.mufan.leetcode.util;
 
+import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSONObject;
-import com.mufan.leetcode.model.AnswerNote;
 import com.mufan.leetcode.model.MyHttpRequest;
 import com.mufan.leetcode.model.MyHttpResponse;
 import com.mufan.leetcode.model.Question;
-import com.mufan.leetcode.util.FileUtils;
-import com.mufan.leetcode.util.HttpRequestUtils;
-import io.github.furstenheim.CopyDown;
-import io.github.furstenheim.Options;
-import io.github.furstenheim.OptionsBuilder;
-import org.apache.commons.lang3.StringUtils;
+import com.mufan.leetcode.vo.WeeklyContest;
 
-import java.util.Objects;
+import java.util.Optional;
 
-public class ArticleManager {
-  public static void generateArticle(String articleSlug, String path) {
-    Question question = getCnArticle(articleSlug);
-    if (Objects.isNull(question)) {
-      System.out.println(articleSlug + "：请求失败！");
-      return;
+public final class LeetCodeRequestUtils {
+  private LeetCodeRequestUtils() {}
+
+  private static String weeklyContestUrl(int id) {
+    return "https://leetcode.cn/contest/api/info/weekly-contest-" + id + "/";
+  }
+
+  public static Optional<WeeklyContest> getWeeklyContestInfo(int id) {
+    MyHttpRequest request = MyHttpRequest.get(weeklyContestUrl(id));
+    MyHttpResponse response = HttpRequestUtils.executeGet(request);
+    if (response.getStatusCode() == HttpStatus.HTTP_OK) {
+      WeeklyContest contest = JSONUtil.toBean(response.getBody(), WeeklyContest.class);
+      System.out.println(contest.getContest().getTitle());
+      return Optional.of(contest);
     }
-
-    AnswerNote note =
-        AnswerNote.builder()
-            .id(question.getQuestionFrontendId())
-            .title(question.getTranslatedTitle())
-            .slug(question.getTitleSlug())
-            .question(formatMarkdown(question.getTranslatedContent()))
-            .build();
-    System.out.println(
-        question.getQuestionFrontendId() + "." + question.getTranslatedTitle() + " 请求成功！");
-    FileUtils.saveFile(path + getFileName(question), note.toString());
+    return Optional.empty();
   }
 
-  private static String getFileName(Question question) {
-    String title = question.getTranslatedTitle().replaceAll(" ", "");
-    return question.getQuestionFrontendId() + title + ".md";
-  }
-
-  private static String formatMarkdown(String content) {
-    if (Objects.isNull(content)) {
-      return StringUtils.EMPTY;
-    }
-    Options options = OptionsBuilder.anOptions().withBr("-").build();
-    CopyDown copyDown = new CopyDown(options);
-    return copyDown.convert(content);
-  }
-
-  private static Question getCnArticle(String articleSlug) {
+  public static Question getCnQuestion(String articleSlug) {
     try {
       MyHttpRequest request =
           MyHttpRequest.post("https://leetcode.cn/graphql/", "application/json");
@@ -78,7 +57,7 @@ public class ArticleManager {
     return null;
   }
 
-  private static String getEnArticle(String articleSlug) {
+  public static String getEnQuestion(String articleSlug) {
     try {
       MyHttpRequest httpRequest =
           MyHttpRequest.post("https://leetcode.cn/graphql/", "application/json");

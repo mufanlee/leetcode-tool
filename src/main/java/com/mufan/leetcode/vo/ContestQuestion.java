@@ -1,9 +1,9 @@
-package com.mufan.leetcode.VO;
+package com.mufan.leetcode.vo;
 
 import lombok.Data;
 
 @Data
-public class Question {
+public class ContestQuestion {
   private String id;
   private String questionId;
   private String title;
