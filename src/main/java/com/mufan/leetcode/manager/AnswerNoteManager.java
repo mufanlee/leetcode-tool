@@ -1,15 +1,13 @@
 package com.mufan.leetcode.manager;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.mufan.leetcode.converter.MdConverter;
 import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.model.AnswerNote;
 import com.mufan.leetcode.model.CodeSnippet;
 import com.mufan.leetcode.model.Question;
 import com.mufan.leetcode.util.FileUtils;
 import com.mufan.leetcode.util.LeetCodeRequestUtils;
-import io.github.furstenheim.CopyDown;
-import io.github.furstenheim.Options;
-import io.github.furstenheim.OptionsBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public final class AnswerNoteManager {
             .id(question.getQuestionFrontendId())
             .title(question.getTranslatedTitle())
             .slug(question.getTitleSlug())
-            .question(formatMarkdown(question.getTranslatedContent()))
+            .question(MdConverter.convert(question.getTranslatedContent()))
             .code(getCodeSnippet(question.getCodeSnippets(), CodeLang.JAVA))
             .build();
     String name = question.getQuestionFrontendId() + ". " + question.getTranslatedTitle();
@@ -42,15 +40,6 @@ public final class AnswerNoteManager {
   private static String getFileName(Question question) {
     String title = question.getTranslatedTitle().replaceAll(" ", "");
     return question.getQuestionFrontendId() + title + ".md";
-  }
-
-  private static String formatMarkdown(String content) {
-    if (Objects.isNull(content)) {
-      return StringUtils.EMPTY;
-    }
-    Options options = OptionsBuilder.anOptions().withBr("-").build();
-    CopyDown copyDown = new CopyDown(options);
-    return copyDown.convert(content);
   }
 
   private static String getCodeSnippet(List<CodeSnippet> codeSnippets, CodeLang lang) {
