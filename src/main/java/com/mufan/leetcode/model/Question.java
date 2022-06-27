@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author lipeng
+ */
 @Data
 public class Question {
   private String questionId;

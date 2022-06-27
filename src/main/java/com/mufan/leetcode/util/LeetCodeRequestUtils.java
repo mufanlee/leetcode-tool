@@ -2,14 +2,15 @@ package com.mufan.leetcode.util;
 
 import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
-import com.mufan.leetcode.model.MyHttpRequest;
-import com.mufan.leetcode.model.MyHttpResponse;
-import com.mufan.leetcode.model.Question;
-import com.mufan.leetcode.model.WeeklyContest;
+import com.mufan.leetcode.model.*;
 
 import java.util.Optional;
 
+/**
+ * @author lipeng
+ */
 public final class LeetCodeRequestUtils {
   private LeetCodeRequestUtils() {}
 
@@ -22,6 +23,36 @@ public final class LeetCodeRequestUtils {
     MyHttpResponse response = HttpRequestUtils.executeGet(request);
     if (response.getStatusCode() == HttpStatus.HTTP_OK) {
       return Optional.of(JSONUtil.toBean(response.getBody(), WeeklyContest.class));
+    }
+    return Optional.empty();
+  }
+
+  public static Optional<DailyQuestion> getDailyQuestion() {
+    try {
+
+      MyHttpRequest request =
+          MyHttpRequest.post("https://leetcode.cn/graphql/", "application/json");
+      String body =
+          "{\n"
+              + "    \"query\": \"\\n    query questionOfToday {\\n  todayRecord {\\n    date\\n    userStatus\\n    question {\\n      questionId\\n      frontendQuestionId: questionFrontendId\\n      difficulty\\n      title\\n      titleCn: translatedTitle\\n      titleSlug\\n      paidOnly: isPaidOnly\\n      freqBar\\n      isFavor\\n      acRate\\n      status\\n      solutionNum\\n      hasVideoSolution\\n      topicTags {\\n        name\\n        nameTranslated: translatedName\\n        id\\n      }\\n      extra {\\n        topCompanyTags {\\n          imgUrl\\n          slug\\n          numSubscribed\\n        }\\n      }\\n    }\\n    lastSubmission {\\n      id\\n    }\\n  }\\n}\\n    \",\n"
+              + "    \"variables\": {}\n"
+              + "}";
+      request.setBody(body);
+      MyHttpResponse response = HttpRequestUtils.executePost(request);
+      if (response.getStatusCode() == HttpStatus.HTTP_OK) {
+        JSONArray records =
+            JSONObject.parseObject(response.getBody())
+                .getJSONObject("data")
+                .getJSONArray("todayRecord");
+        if (records.isEmpty()) {
+          return Optional.empty();
+        }
+
+        JSONObject question = records.getJSONObject(0).getJSONObject("question");
+        return Optional.of(JSONUtil.toBean(question.toJSONString(), DailyQuestion.class));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return Optional.empty();
   }
@@ -42,7 +73,7 @@ public final class LeetCodeRequestUtils {
               + "}";
       request.setBody(body);
       MyHttpResponse response = HttpRequestUtils.executePost(request);
-      if (response.getStatusCode() == 200) {
+      if (response.getStatusCode() == HttpStatus.HTTP_OK) {
         JSONObject questionJsonObject =
             JSONObject.parseObject(response.getBody())
                 .getJSONObject("data")
@@ -71,7 +102,7 @@ public final class LeetCodeRequestUtils {
               + "}";
       httpRequest.setBody(body);
       MyHttpResponse response = HttpRequestUtils.executePost(httpRequest);
-      if (response.getStatusCode() == 200) {
+      if (response.getStatusCode() == HttpStatus.HTTP_OK) {
         return JSONObject.parseObject(response.getBody())
             .getJSONObject("data")
             .getJSONObject("question")

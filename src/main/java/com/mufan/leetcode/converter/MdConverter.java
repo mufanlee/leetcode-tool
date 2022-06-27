@@ -6,9 +6,14 @@ import io.github.furstenheim.Options;
 import io.github.furstenheim.OptionsBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * @author lipeng
+ */
 public final class MdConverter {
   private MdConverter() {}
 
+  // TODO: (1) h`~i~` => hi
+  // TODO: (2) `10`^9^
   public static String convert(String html) {
     if (StringUtils.isBlank(html)) {
       return StringUtils.EMPTY;

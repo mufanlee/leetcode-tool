@@ -7,6 +7,9 @@ import com.mufan.leetcode.util.LeetCodeRequestUtils;
 
 import java.util.Optional;
 
+/**
+ * @author lipeng
+ */
 public final class WeeklyContestManager {
   private WeeklyContestManager() {}
 
