@@ -5,4 +5,6 @@ package com.mufan.leetcode.constant;
  */
 public interface Constant {
   String ROOT_PATH = "D:\\workspace\\leetcode-tool\\src\\main\\resources\\doc\\";
+
+  String CODING_PATH = "D:\\workspace\\leetcode-tool\\coding\\src\\main\\java\\";
 }

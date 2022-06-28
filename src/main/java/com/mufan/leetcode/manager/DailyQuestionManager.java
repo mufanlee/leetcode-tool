@@ -2,6 +2,7 @@ package com.mufan.leetcode.manager;
 
 import cn.hutool.core.date.DateUtil;
 import com.mufan.leetcode.constant.Constant;
+import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.util.LeetCodeRequestUtils;
 
 /**
@@ -11,15 +12,19 @@ public final class DailyQuestionManager {
   private DailyQuestionManager() {}
 
   public static void generateNote(String rootPath) {
-    System.out.println(DateUtil.today());
+    System.out.println(DateUtil.today() + " 每日一题：");
     LeetCodeRequestUtils.getDailyQuestion()
         .ifPresent(
-            question ->
-                AnswerNoteManager.generateAnswerNote(
-                    question.getTitleSlug(), rootPath + "\\daily\\"));
+            question -> {
+              String time = DateUtil.today().replaceAll("-", "");
+              AnswerNoteManager.generateAnswerNote(
+                  question.getTitleSlug(), rootPath + "\\daily\\d" + time + "\\");
+              CodeManager.generateCode(
+                  question.getTitleSlug(), rootPath + "\\daily\\d" + time + "\\", CodeLang.JAVA);
+            });
   }
 
   public static void main(String[] args) {
-    DailyQuestionManager.generateNote(Constant.ROOT_PATH);
+    DailyQuestionManager.generateNote(Constant.CODING_PATH);
   }
 }

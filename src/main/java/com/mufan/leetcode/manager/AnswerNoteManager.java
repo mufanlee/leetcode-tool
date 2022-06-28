@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author lipeng
+ */
 public final class AnswerNoteManager {
   private AnswerNoteManager() {}
 
