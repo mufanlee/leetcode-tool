@@ -1,6 +1,5 @@
 package com.mufan.leetcode.manager;
 
-import cn.hutool.core.io.FileUtil;
 import com.mufan.leetcode.constant.Constant;
 import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.model.CodeSnippet;
