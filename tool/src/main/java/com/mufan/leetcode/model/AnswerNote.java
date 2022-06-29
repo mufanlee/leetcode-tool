@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author lipeng
+ */
 @Builder
 @Setter
 @Getter
@@ -14,6 +17,8 @@ public class AnswerNote {
   private String title;
   private String slug;
   private String question;
+
+  private String lang;
 
   private String code;
 

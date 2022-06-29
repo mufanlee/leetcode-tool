@@ -1,13 +1,13 @@
 package com.mufan.leetcode.manager;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.mufan.leetcode.converter.MdConverter;
+import com.mufan.leetcode.model.CodeSnippet;
+import com.mufan.leetcode.converter.QuestionToAnswerNoteConverter;
 import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.model.AnswerNote;
-import com.mufan.leetcode.model.CodeSnippet;
 import com.mufan.leetcode.model.Question;
-import com.mufan.leetcode.util.FileUtils;
 import com.mufan.leetcode.util.LeetCodeRequestUtils;
+import com.mufan.leetcode.util.TemplateUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -27,17 +27,14 @@ public final class AnswerNoteManager {
       return;
     }
 
-    AnswerNote note =
-        AnswerNote.builder()
-            .id(question.getQuestionFrontendId())
-            .title(question.getTranslatedTitle())
-            .slug(question.getTitleSlug())
-            .question(MdConverter.convert(question.getTranslatedContent()))
-            .code(getCodeSnippet(question.getCodeSnippets(), CodeLang.JAVA))
-            .build();
-    String name = question.getQuestionFrontendId() + ". " + question.getTranslatedTitle();
-    System.out.println("[" + name + "](leetcode/" + getFileName(question) + ")");
-    FileUtils.saveFile(path + getFileName(question), note.toString());
+    AnswerNote note = QuestionToAnswerNoteConverter.INSTANCE.convert(question);
+    String noteStr =
+        TemplateUtils.render(
+            "templates/answer-note-template.stg", "answerNoteTemplate", "answerNote", note);
+    System.out.println(noteStr);
+//    String name = question.getQuestionFrontendId() + ". " + question.getTranslatedTitle();
+//    System.out.println("[" + name + "](leetcode/" + getFileName(question) + ")");
+//    FileUtils.saveFile(path + getFileName(question), note.toString());
   }
 
   private static String getFileName(Question question) {
