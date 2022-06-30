@@ -10,6 +10,5 @@ target/
 .vscode/
 
 /src/main/resources/doc/
-/coding/src/main/java/
 /**/src/test/resources/doc/
 /**/src/main/resources/doc/

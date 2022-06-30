@@ -32,7 +32,7 @@ public abstract class QuestionToAnswerNoteConverter implements Converter<Questio
   public void afterConvert(Question source, @MappingTarget AnswerNote target) {
     target.setQuestion(MdConverter.convert(source.getTranslatedContent()));
     CodeLang lang = CodeLang.JAVA;
-    target.setLang(lang.getValue());
+    target.setLang(lang.getSlug());
     String code =
         Optional.ofNullable(source.getCodeSnippets())
             .filter(CollectionUtil::isNotEmpty)

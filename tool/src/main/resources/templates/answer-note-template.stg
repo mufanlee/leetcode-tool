@@ -1,5 +1,5 @@
 answerNoteTemplate(answerNote) ::= <<
-# [<answerNote.id>. <answerNote.title>](https://leetcode.cn/problems/<answerNote.slug>/)]
+# [<answerNote.id>. <answerNote.title>](https://leetcode.cn/problems/<answerNote.slug>/)
 
 ### 题目
 
