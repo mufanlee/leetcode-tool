@@ -1,34 +1,38 @@
 package com.mufan.leetcode.manager;
 
-import com.mufan.leetcode.model.Contest;
-import com.mufan.leetcode.model.ContestQuestion;
+import cn.hutool.log.Log;
+import com.mufan.leetcode.constant.Constant;
+import com.mufan.leetcode.helper.LeetCodeWeeklyContestHelper;
 import com.mufan.leetcode.model.WeeklyContest;
-import com.mufan.leetcode.util.LeetCodeRequestUtils;
 
 import java.util.Optional;
 
 /**
+ * WeeklyContest Manager
+ *
  * @author lipeng
  */
 public final class WeeklyContestManager {
-  private WeeklyContestManager() {}
+    private static final Log LOG = Log.get();
 
-  public static void generateNote(int weeklyContestId, String rootPath) {
-    Optional<WeeklyContest> contest = LeetCodeRequestUtils.getWeeklyContestInfo(weeklyContestId);
-    if (contest.isPresent()) {
-      print(contest.get(), weeklyContestId);
-      for (ContestQuestion question : contest.get().getQuestions()) {
-        AnswerNoteManager.generateAnswerNote(
-            question.getTitleSlug(), rootPath + weeklyContestId + "\\");
-      }
-      return;
+    private WeeklyContestManager() {
     }
-    System.out.println("第" + weeklyContestId + "场生成失败！");
-  }
 
-  private static void print(WeeklyContest weeklyContest, int id) {
-    Contest contest = weeklyContest.getContest();
-    System.out.println(contest.getTitle());
-    System.out.println("[第" + id + "场](leetcode/weekly-contest/第" + id + "场.md)");
-  }
+    public static void generateNote(int weeklyContestId, String rootPath) {
+        Optional<WeeklyContest> contest = LeetCodeWeeklyContestHelper.getWeeklyContest(weeklyContestId);
+        if (!contest.isPresent()) {
+            LOG.error("Weekly Contest {} request failed!", weeklyContestId);
+            return;
+        }
+
+        LOG.info(contest.get().getContest().getTitle());
+        LOG.info("[第{}场](leetcode/weekly-contest/第{}场.md)", weeklyContestId, weeklyContestId);
+        String path = rootPath + "contest\\c" + weeklyContestId + "\\";
+        contest.get().getQuestions().forEach(question -> AnswerNoteManager.generateNote(question.getTitleSlug(), path));
+    }
+
+    public static void main(String[] args) {
+        WeeklyContestManager.generateNote(298, Constant.CODING_PATH);
+        WeeklyContestManager.generateNote(299, Constant.CODING_PATH);
+    }
 }

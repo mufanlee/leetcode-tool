@@ -6,7 +6,7 @@ public class AnswerNoteManagerTest {
 
   @Test
   public void generateAnswerNote() {
-    AnswerNoteManager.generateAnswerNote(
+    AnswerNoteManager.generateNote(
         "check-if-matrix-is-x-matrix",
         "D:\\workspace\\leetcode-tool\\tool\\src\\test\\resources\\doc\\");
   }

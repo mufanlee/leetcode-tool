@@ -1,7 +1,7 @@
 answerNoteTemplate(answerNote) ::= <<
 # [<answerNote.id>. <answerNote.title>](https://leetcode.cn/problems/<answerNote.slug>/)
 
-### 题目
+### 题目（<answerNote.difficulty>）
 
 <answerNote.question>
 
@@ -16,7 +16,9 @@ answerNoteTemplate(answerNote) ::= <<
 
 ### 代码
 
-```<answerNote.lang>
-<answerNote.code>
+<answerNote.codes:{code|
+```<code.key>
+<code.value>
 ```
+}>
 >>

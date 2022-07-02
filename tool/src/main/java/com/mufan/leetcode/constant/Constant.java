@@ -1,10 +1,10 @@
 package com.mufan.leetcode.constant;
 
 /**
+ * Constant
+ *
  * @author lipeng
  */
 public interface Constant {
-  String ROOT_PATH = "D:\\workspace\\leetcode-tool\\src\\main\\resources\\doc\\";
-
-  String CODING_PATH = "D:\\workspace\\leetcode-tool\\coding\\src\\main\\java\\";
+    String CODING_PATH = "D:\\workspace\\leetcode-tool\\coding\\src\\main\\java\\";
 }
