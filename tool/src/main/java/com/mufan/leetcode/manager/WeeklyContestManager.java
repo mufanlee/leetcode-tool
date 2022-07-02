@@ -1,9 +1,10 @@
 package com.mufan.leetcode.manager;
 
+import cn.hutool.core.text.StrPool;
 import cn.hutool.log.Log;
-import com.mufan.leetcode.constant.Constant;
 import com.mufan.leetcode.helper.LeetCodeWeeklyContestHelper;
 import com.mufan.leetcode.model.WeeklyContest;
+import com.mufan.leetcode.util.PropUtils;
 
 import java.util.Optional;
 
@@ -27,12 +28,27 @@ public final class WeeklyContestManager {
 
         LOG.info(contest.get().getContest().getTitle());
         LOG.info("[第{}场](leetcode/weekly-contest/第{}场.md)", weeklyContestId, weeklyContestId);
-        String path = rootPath + "contest\\c" + weeklyContestId + "\\";
+        String path = rootPath + "contest/c" + weeklyContestId + StrPool.SLASH;
+        contest.get().getQuestions().forEach(question -> AnswerNoteManager.generateNote(question.getTitleSlug(), path));
+    }
+
+    public static void generateBiWeeklyNote(int weeklyContestId, String rootPath) {
+        Optional<WeeklyContest> contest = LeetCodeWeeklyContestHelper.getBiweeklyContest(weeklyContestId);
+        if (!contest.isPresent()) {
+            LOG.error("Weekly Contest {} request failed!", weeklyContestId);
+            return;
+        }
+
+        LOG.info(contest.get().getContest().getTitle());
+        LOG.info("[第{}场](leetcode/weekly-contest/第{}场.md)", weeklyContestId, weeklyContestId);
+        String path = rootPath + "contest/cc" + weeklyContestId + StrPool.SLASH;
         contest.get().getQuestions().forEach(question -> AnswerNoteManager.generateNote(question.getTitleSlug(), path));
     }
 
     public static void main(String[] args) {
-        WeeklyContestManager.generateNote(298, Constant.CODING_PATH);
-        WeeklyContestManager.generateNote(299, Constant.CODING_PATH);
+        String path = PropUtils.getStr("configs/config.properties", "code-path");
+//        WeeklyContestManager.generateNote(298, path);
+//        WeeklyContestManager.generateNote(299, path);
+        WeeklyContestManager.generateBiWeeklyNote(81, path);
     }
 }

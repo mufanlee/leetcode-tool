@@ -1,12 +1,13 @@
 package com.mufan.leetcode.manager;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.text.StrPool;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.mufan.leetcode.constant.Constant;
 import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.helper.LeetCodeDailyQuestionHelper;
 import com.mufan.leetcode.model.DailyQuestion;
+import com.mufan.leetcode.util.PropUtils;
 
 import java.util.Optional;
 
@@ -29,12 +30,13 @@ public final class DailyQuestionManager {
         DailyQuestion question = dailyQuestion.get();
         LOG.info("{} daily question: {}", DateUtil.today(), question.getTitleCn());
         String time = DateUtil.format(DateUtil.date(), "yyyyMMdd");
-        String filePath = rootPath + "\\daily\\d" + time + "\\";
+        String filePath = rootPath + "/daily/dd" + time + StrPool.SLASH;
         AnswerNoteManager.generateNote(question.getTitleSlug(), filePath);
         CodeManager.generateCode(question.getTitleSlug(), filePath, CodeLang.JAVA);
     }
 
     public static void main(String[] args) {
-        DailyQuestionManager.generateNote(Constant.CODING_PATH);
+        String path = PropUtils.getStr("configs/config.properties", "code-path");
+        DailyQuestionManager.generateNote(path);
     }
 }

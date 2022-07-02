@@ -1,5 +1,6 @@
 package com.mufan.leetcode.manager;
 
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.log.Log;
 import com.mufan.leetcode.enums.CodeLang;
 import com.mufan.leetcode.helper.LeetCodeQuestionHelper;
@@ -7,7 +8,6 @@ import com.mufan.leetcode.manager.code.DefaultCodeFileFactory;
 import com.mufan.leetcode.model.Question;
 import com.mufan.leetcode.util.FileUtils;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -28,10 +28,11 @@ public final class CodeManager {
             return;
         }
 
+        LOG.info("Generate {} Code.", question.get().getFullCnName());
         question.get().getCodeSnippets().stream()
-                .filter(snippet -> Objects.equals(snippet.getLang(), lang.getValue()))
+                .filter(snippet -> CharSequenceUtil.equalsIgnoreCase(snippet.getLangSlug(), lang.getSlug()))
                 .map(snippet -> DefaultCodeFileFactory.getInstance()
-                        .getCodeFile(CodeLang.getEnum(snippet.getLang()), snippet.getCode()))
+                        .getCodeFile(CodeLang.getEnum(snippet.getLangSlug()), snippet.getCode()))
                 .findAny()
                 .ifPresent(codeFile -> FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode()));
     }
@@ -45,7 +46,7 @@ public final class CodeManager {
 
         question.get().getCodeSnippets().stream()
                 .map(snippet -> DefaultCodeFileFactory.getInstance()
-                        .getCodeFile(CodeLang.getEnum(snippet.getLang()), snippet.getCode()))
+                        .getCodeFile(CodeLang.getEnum(snippet.getLangSlug()), snippet.getCode()))
                 .forEach(codeFile -> FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode()));
     }
 }

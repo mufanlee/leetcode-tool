@@ -24,7 +24,15 @@ public class LeetCodeWeeklyContestHelper {
     }
 
     public static Optional<WeeklyContest> getWeeklyContest(int id) {
-        HttpResponse response = HttpRequest.get(StrUtil.format(LeetCodeConstants.WEEKLY_CONTEST_URL, MapUtil.of("id", id)))
+        return getWeeklyContest(LeetCodeConstants.WEEKLY_CONTEST_URL, id);
+    }
+
+    public static Optional<WeeklyContest> getBiweeklyContest(int id) {
+        return getWeeklyContest(LeetCodeConstants.BIWEEKLY_CONTEST_URL, id);
+    }
+
+    private static Optional<WeeklyContest> getWeeklyContest(String url, int id) {
+        HttpResponse response = HttpRequest.get(StrUtil.format(url, MapUtil.of("id", id)))
                 .header(Header.ACCEPT, ContentType.JSON.getValue())
                 .timeout(LeetCodeConstants.TIMEOUT)
                 .execute();

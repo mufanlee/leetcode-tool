@@ -10,5 +10,7 @@ public interface LeetCodeConstants {
 
     String WEEKLY_CONTEST_URL = "https://leetcode.cn/contest/api/info/weekly-contest-{id}/";
 
+    String BIWEEKLY_CONTEST_URL = "https://leetcode.cn/contest/api/info/biweekly-contest-{id}/";
+
     int TIMEOUT = 90000;
 }
