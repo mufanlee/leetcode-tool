@@ -3,6 +3,7 @@ package com.mufan.leetcode.manager;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.log.Log;
 import com.mufan.leetcode.enums.CodeLang;
+import com.mufan.leetcode.helper.LeetCodePlaygroundHelper;
 import com.mufan.leetcode.helper.LeetCodeQuestionHelper;
 import com.mufan.leetcode.manager.code.DefaultCodeFileFactory;
 import com.mufan.leetcode.model.Question;
@@ -34,7 +35,11 @@ public final class CodeManager {
                 .map(snippet -> DefaultCodeFileFactory.getInstance()
                         .getCodeFile(CodeLang.getEnum(snippet.getLangSlug()), snippet.getCode()))
                 .findAny()
-                .ifPresent(codeFile -> FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode()));
+                .ifPresent(codeFile -> {
+                    String mainClass
+                            = LeetCodePlaygroundHelper.getMainClass(question.get().getQuestionFrontendId(), lang);
+                    FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode() + mainClass);
+                });
     }
 
     public static void generateCodes(String questionSlug, String rootPath) {
