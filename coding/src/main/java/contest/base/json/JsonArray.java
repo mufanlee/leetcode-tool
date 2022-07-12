@@ -25,6 +25,11 @@ public class JsonArray extends JSONArray {
         return new JsonString(jsonArray.getStr(index));
     }
 
+    @Override
+    public String toString() {
+        return this.jsonArray.toString();
+    }
+
     public static JsonArray readFrom(String str) {
         return new JsonArray(JSONUtil.parseArray(str));
     }

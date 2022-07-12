@@ -36,9 +36,10 @@ public final class CodeManager {
                         .getCodeFile(CodeLang.getEnum(snippet.getLangSlug()), snippet.getCode()))
                 .findAny()
                 .ifPresent(codeFile -> {
+                    String testcases = "\r\n/*" + question.get().getExampleTestcases() + "*/";
                     String mainClass
-                            = LeetCodePlaygroundHelper.getMainClass(question.get().getQuestionFrontendId(), lang);
-                    FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode() + mainClass);
+                            = LeetCodePlaygroundHelper.getMainClass(question.get().getQuestionId(), lang);
+                    FileUtils.saveFile(rootPath + codeFile.getFileName(), codeFile.getCode() + testcases + mainClass);
                 });
     }
 

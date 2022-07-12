@@ -48,7 +48,8 @@ public final class WeeklyContestManager {
     public static void main(String[] args) {
         String path = PropUtils.getStr("configs/config.properties", "code-path");
 //        WeeklyContestManager.generateNote(298, path);
-        WeeklyContestManager.generateNote(300, path);
+//        WeeklyContestManager.generateNote(300, path);
+        WeeklyContestManager.generateNote(301, path);
 //        WeeklyContestManager.generateBiWeeklyNote(81, path);
     }
 }
