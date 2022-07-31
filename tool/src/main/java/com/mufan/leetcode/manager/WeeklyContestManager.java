@@ -2,10 +2,15 @@ package com.mufan.leetcode.manager;
 
 import cn.hutool.core.text.StrPool;
 import cn.hutool.log.Log;
+import com.mufan.leetcode.enums.Region;
 import com.mufan.leetcode.helper.LeetCodeWeeklyContestHelper;
+import com.mufan.leetcode.model.ContestRank;
+import com.mufan.leetcode.model.UserRank;
 import com.mufan.leetcode.model.WeeklyContest;
+import com.mufan.leetcode.util.ExcelUtils;
 import com.mufan.leetcode.util.PropUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,7 +27,7 @@ public final class WeeklyContestManager {
     public static void generateNote(int weeklyContestId, String rootPath) {
         Optional<WeeklyContest> contest = LeetCodeWeeklyContestHelper.getWeeklyContest(weeklyContestId);
         if (!contest.isPresent()) {
-            LOG.error("Weekly Contest {} request failed!", weeklyContestId);
+            LOG.error("Weekly contest {} request failed!", weeklyContestId);
             return;
         }
 
@@ -35,7 +40,7 @@ public final class WeeklyContestManager {
     public static void generateBiWeeklyNote(int weeklyContestId, String rootPath) {
         Optional<WeeklyContest> contest = LeetCodeWeeklyContestHelper.getBiweeklyContest(weeklyContestId);
         if (!contest.isPresent()) {
-            LOG.error("Weekly Contest {} request failed!", weeklyContestId);
+            LOG.error("BiWeekly contest {} request failed!", weeklyContestId);
             return;
         }
 
@@ -45,11 +50,26 @@ public final class WeeklyContestManager {
         contest.get().getQuestions().forEach(question -> AnswerNoteManager.generateNote(question.getTitleSlug(), path));
     }
 
+    public static void generateRanking(int weeklyContestId, String rootPath) {
+        Optional<ContestRank> contestRank = LeetCodeWeeklyContestHelper.getRanking(weeklyContestId, Region.LOCAL);
+        if (!contestRank.isPresent()) {
+            LOG.error("Weekly contest {} ranking request failed!", weeklyContestId);
+            return;
+        }
+
+        List<UserRank> totalRank = contestRank.get().getTotalRank();
+        String path = rootPath + "contest/c" + weeklyContestId + "/Ranking-" + weeklyContestId + ".xlsx";
+        LOG.info(path);
+        ExcelUtils.write(path, totalRank);
+    }
+
     public static void main(String[] args) {
         String path = PropUtils.getStr("configs/config.properties", "code-path");
 //        WeeklyContestManager.generateNote(298, path);
 //        WeeklyContestManager.generateNote(300, path);
-        WeeklyContestManager.generateNote(301, path);
+//        WeeklyContestManager.generateNote(301, path);
+//        WeeklyContestManager.generateNote(304, path);
+        WeeklyContestManager.generateRanking(304, path);
 //        WeeklyContestManager.generateBiWeeklyNote(81, path);
     }
 }

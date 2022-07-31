@@ -1,4 +1,4 @@
-package contest.base.json;
+package base.json;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;

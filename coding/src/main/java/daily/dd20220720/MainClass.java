@@ -1,6 +1,6 @@
 package daily.dd20220720;
 
-import contest.base.json.JsonArray;
+import base.json.JsonArray;
 
 import java.io.BufferedReader;
 import java.io.IOException;

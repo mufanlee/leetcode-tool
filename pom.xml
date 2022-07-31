@@ -23,13 +23,16 @@
         <maven.compiler.target>1.7</maven.compiler.target>
         <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
         <org.projectlombok.version>1.18.24</org.projectlombok.version>
+        <hutool.version>5.8.3</hutool.version>
+        <org.apache.poi.version>5.2.2</org.apache.poi.version>
+        <com.vladsch.flexmark.version>0.64.0</com.vladsch.flexmark.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.3</version>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -50,7 +53,12 @@
         <dependency>
             <groupId>com.vladsch.flexmark</groupId>
             <artifactId>flexmark-html2md-converter</artifactId>
-            <version>0.64.0</version>
+            <version>${com.vladsch.flexmark.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${org.apache.poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.antlr</groupId>

@@ -14,5 +14,7 @@ public interface LeetCodeConstants {
 
     String PLAYGROUND_URL = "https://leetcode.cn/playground/new/empty/";
 
+    String WEEKLY_CONTEST_RANK_URL = "https://leetcode.cn/contest/api/ranking/weekly-contest-{id}/";
+
     int TIMEOUT = 90000;
 }
