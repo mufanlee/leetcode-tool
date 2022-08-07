@@ -17,4 +17,8 @@ public class JsonString {
     public JsonArray asArray() {
         return new JsonArray(JSONUtil.parseArray(str));
     }
+
+    public String asString() {
+        return str;
+    }
 }
