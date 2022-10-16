@@ -1,4 +1,4 @@
-package daily.dd20221016;
+package daily.d202210.dd20221016;
 
 import base.json.JsonArray;
 
