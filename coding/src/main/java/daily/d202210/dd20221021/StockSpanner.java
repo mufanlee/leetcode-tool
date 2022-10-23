@@ -1,4 +1,4 @@
-package daily.dd20221021;
+package daily.d202210.dd20221021;
 
 import java.util.ArrayList;
 import java.util.List;
