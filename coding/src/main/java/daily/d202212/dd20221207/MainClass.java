@@ -1,4 +1,4 @@
-package daily.dd20221207;
+package daily.d202212.dd20221207;
 
 import java.io.BufferedReader;
 import java.io.IOException;
