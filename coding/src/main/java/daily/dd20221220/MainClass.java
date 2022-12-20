@@ -1,23 +1,37 @@
-package daily.dd20221216;
+package daily.dd20221220;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Solution {
-    public int minElements(int[] nums, int limit, int goal) {
-        long sum = 0;
-        for (int x : nums) sum += x;
-        long target = Math.abs(goal - sum);
-        return (int) ((target + limit - 1) / limit);
+    public int minimumSize(int[] nums, int maxOperations) {
+        int l = 1, r = nums[0];
+        for (int x : nums) r = Math.max(r, x);
+        while (l < r) {
+            int mid = l + r >> 1;
+            if (check(mid, nums, maxOperations)) {
+                r = mid;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return l;
+    }
+
+    private boolean check(int mid, int[] nums, int maxOperations) {
+        int cnt = 0;
+        for (int x : nums) {
+            if (x <= mid) continue;
+            cnt += (x - 1) / mid;
+        }
+        return cnt <= maxOperations;
     }
 }
-/*[1,-1,1]
-3
--4
-[1,-10,9,1]
-100
-0*/
+/*[9]
+2
+[2,4,8,2]
+4*/
 
 public class MainClass {
     public static int[] stringToIntegerArray(String input) {
@@ -42,11 +56,9 @@ public class MainClass {
         while ((line = in.readLine()) != null) {
             int[] nums = stringToIntegerArray(line);
             line = in.readLine();
-            int limit = Integer.parseInt(line);
-            line = in.readLine();
-            int goal = Integer.parseInt(line);
+            int maxOperations = Integer.parseInt(line);
 
-            int ret = new Solution().minElements(nums, limit, goal);
+            int ret = new Solution().minimumSize(nums, maxOperations);
 
             String out = String.valueOf(ret);
 
