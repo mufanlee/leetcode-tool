@@ -72,7 +72,7 @@ public final class WeeklyContestManager {
 //        WeeklyContestManager.generateRanking(305, path);
 //        WeeklyContestManager.generateNote(311, path);
 //        WeeklyContestManager.generateRanking(319, path);
-        WeeklyContestManager.generateNote(323, path);
+        WeeklyContestManager.generateNote(324, path);
 //        WeeklyContestManager.generateRanking(313, path);
 //        WeeklyContestManager.generateBiWeeklyNote(88, path);
     }
