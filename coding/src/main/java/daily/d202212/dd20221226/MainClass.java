@@ -1,4 +1,4 @@
-package daily.dd20221228;
+package daily.d202212.dd20221226;
 
 import base.json.JsonArray;
 
@@ -7,20 +7,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Solution {
-    public int minimumLength(String s) {
-        int i = 0, j = s.length() - 1;
-        while (i < j && s.charAt(i) == s.charAt(j)) {
-            char c = s.charAt(i);
-            while (i <= j && s.charAt(i) == c) i++;
-            while (i <= j && s.charAt(j) == c) j--;
+    public int countHomogenous(String s) {
+        final long mod = 1000000007;
+        long ans = 0;
+        int i = 0;
+        while (i < s.length()) {
+            int j = i;
+            while (j < s.length() && s.charAt(j) == s.charAt(i)) {
+                j++;
+            }
+
+            long cnt = j - i;
+            ans = (ans + cnt * (cnt + 1) / 2) % mod;
+            i = j;
         }
-        return j - i + 1;
+        return (int) ans;
     }
 }
 
-/*"ca"
-"cabaabac"
-"aabccabba"*/
+/*"abbcccaa"
+"xy"
+"zzzzz"*/
 
 public class MainClass {
     public static String stringToString(String input) {
@@ -33,7 +40,7 @@ public class MainClass {
         while ((line = in.readLine()) != null) {
             String s = stringToString(line);
             
-            int ret = new Solution().minimumLength(s);
+            int ret = new Solution().countHomogenous(s);
             
             String out = String.valueOf(ret);
             

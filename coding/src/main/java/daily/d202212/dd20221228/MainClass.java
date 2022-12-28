@@ -1,4 +1,4 @@
-package daily.dd20221227;
+package daily.d202212.dd20221228;
 
 import base.json.JsonArray;
 
@@ -7,23 +7,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 class Solution {
-    public int minimumMoves(String s) {
-        int ans = 0, i = 0;
-        while (i < s.length()) {
-            if (s.charAt(i) == 'X') {
-                i += 3;
-                ans++;
-            } else {
-                i++;
-            }
+    public int minimumLength(String s) {
+        int i = 0, j = s.length() - 1;
+        while (i < j && s.charAt(i) == s.charAt(j)) {
+            char c = s.charAt(i);
+            while (i <= j && s.charAt(i) == c) i++;
+            while (i <= j && s.charAt(j) == c) j--;
         }
-        return ans;
+        return j - i + 1;
     }
 }
 
-/*"XXX"
-"XXOX"
-"OOOO"*/
+/*"ca"
+"cabaabac"
+"aabccabba"*/
 
 public class MainClass {
     public static String stringToString(String input) {
@@ -36,7 +33,7 @@ public class MainClass {
         while ((line = in.readLine()) != null) {
             String s = stringToString(line);
             
-            int ret = new Solution().minimumMoves(s);
+            int ret = new Solution().minimumLength(s);
             
             String out = String.valueOf(ret);
             
