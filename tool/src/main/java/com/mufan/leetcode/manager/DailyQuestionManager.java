@@ -54,6 +54,6 @@ public final class DailyQuestionManager {
     public static void main(String[] args) {
         String path = PropUtils.getStr("configs/config.properties", "code-path");
         DailyQuestionManager.generateNote(path);
-//        DailyQuestionManager.generateNote("numbers-at-most-n-given-digit-set", "20221018", path);
+//        DailyQuestionManager.generateNote("second-largest-digit-in-a-string", "20221203", path);
     }
 }
